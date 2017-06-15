@@ -6,13 +6,14 @@ import tkinter ,threading
 from time import sleep
 from tkinter import messagebox,ttk
 from tkinter import *
+from py_excel import qidongceshi
 def qidongapp():
+	start_tim=[]
+	cishu=[]
 	status_shebei=huoqushebeizhuangtai()
 	if status_shebei =='device':
 		packname=baoming_t.get('0.0',END)
-	
 		acti=activ_t.get('0.0',END)
-
 		cish=cishu_ac.get()
 		if len(acti)<=1 or len(packname)<=1:
 			messagebox.showinfo('提醒','包命或者包名activity不能为空')
@@ -26,7 +27,9 @@ def qidongapp():
 				sum=0
 				for i in range(int(cish)):
 					start_time=starttime_app(packagename=packname,packagenameactivicy=acti)
-					print(start_time)
+					start_tim.append(int(start_time[1]))
+
+					cishu.append(i)
 					if start_time is None:
 						messagebox.showwarning('警告','请检查您输入的包或者包的启动activity')
 						break
@@ -37,7 +40,9 @@ def qidongapp():
 					e1.insert(tkinter.END,'\n')
 					e1.see(END)
 					btn_start['state']= 'disabled'
-				e1.insert(tkinter.END,sum/int(cish))
+				e1.insert(tkinter.END,('平均用时:%s'%(sum/int(cish))))
+				qidongceshi(cishu=cishu,start=start_tim)
+				messagebox.showinfo('提示','测试报告已经生成，请到当前目录查看')
 				e1['state']= 'disabled'
 				btn_start['state']= 'normal'
 				messagebox.showinfo('通知','测试已经完成')
