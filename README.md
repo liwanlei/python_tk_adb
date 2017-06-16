@@ -4,3 +4,7 @@
 # 如图展示
 ![Alt text](https://github.com/liwanlei/python_tk_adb/blob/master/11.png)
 # 生成的Excel测试报告
+![Alt text](https://github.com/liwanlei/python_tk_adb/blob/master/baogao.png)
+![Alt text](https://github.com/liwanlei/python_tk_adb/blob/master/baogao%20(2).png)
+![Alt text](https://github.com/liwanlei/python_tk_adb/blob/master/E.png)
+![Alt text](https://github.com/liwanlei/python_tk_adb/blob/master/5.png)
