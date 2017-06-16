@@ -6,7 +6,7 @@ import tkinter ,threading
 from time import sleep
 from tkinter import messagebox,ttk
 from tkinter import *
-from py_excel import qidongceshi
+from py_excel import qidongceshi,getcpu
 def qidongapp():
 	start_tim=[]
 	cishu=[]
@@ -84,28 +84,44 @@ def cpu_app():
 		xing=xing_t.get()
 		if len(xingneng_bao)<=5:
 			messagebox.showwarning('警告','请检查您的包名')
+		cishu_list=[]
+		cpu_list=[]
+		rescv_list=[]
+		send_list=[]
+		total_list=[]
+		pass_list=[]
+		i=0
 		for i in range(int(xing)):
 			nen_cun=getnencun(xingneng_bao)
+
 			rescv,send,liulang_sum=liulang(xingneng_bao)
 			cpu_caiji=caijicpu(xingneng_bao)
 			neicun_t['state']= 'normal'
+			pass_list.append(int(nen_cun))
 			neicun_t.insert(tkinter.END,('Pass值：%s'%nen_cun))
 			neicun_t.insert(tkinter.END,'\n')
 			neicun_t.see(END)
 			neicun_t['state']= 'disabled'
 			cpu_t['state']= 'normal'
+			cpu_list.append(int(cpu_caiji.split('%')[0]))
 			cpu_t.insert(tkinter.END,('CPU占有率：%s'%cpu_caiji))
 			cpu_t.insert(tkinter.END,'\n')
 			cpu_t.see(END)
 			cpu_t['state']= 'disabled'
 			liulang_t['state']= 'normal'
+			total_list.append(int(liulang_sum))
+			rescv_list.append(int(rescv))
+			send_list.append(int(send))
 			liulang_t.insert(tkinter.END,('总流量：%sk,上传流量:%sk,下载流量：%sk'%(liulang_sum,rescv,send)))
 			liulang_t.insert(tkinter.END,'\n')
 			liulang_t.see(END)
 			liulang_t['state']= 'disabled'
 			xingneng_btn['state']= 'disabled'
-
+			i+=1
+			cishu_list.append(int(i))
+		getcpu(cishu=cishu_list,start_cpu=cpu_list,recv_list=rescv_list,send_list=send_list,total_list=total_list,Pass_list=pass_list)
 		xingneng_btn['state']= 'normal'
+		messagebox.showinfo('提醒','测试完毕，测试报告已经生成！')
 	else:
 		messagebox.showwarning('警告','设备连接异常 请重新连接设备!')
 def teread():
