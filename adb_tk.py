@@ -70,7 +70,7 @@ def monkey_app():
 
 			# btn_monkey['state']= 'disabled'
 			adb_monkey(packagename=packname,s_num=zhongzi,throttle=time,pct_touch=touch,pct_motion=huadong,pct_trackball=guiji,pct_nav=danghang,pct_syskeys=xitong,pct_appswitch=acti,num=event,logfilepath=log)
-			# messagebox.showinfo('通知',('测试完毕,日志存放：%s'%log))
+			#messagebox.showinfo('通知',('测试完毕,日志存放：%s'%log))
 			# btn_monkey['state']= 'normal'
 		except :
 			messagebox.showwarning('警告','必须填写monkey相关数据')
@@ -184,7 +184,7 @@ if __name__ == '__main__':
 			baoming_t1=tkinter.Text(root,height=1,width=30)
 			baoming_t1.insert('0.0',0)
 			baoming_t1.grid(row=12,column=2)
-			tkinter.Label(root,text='随机种子数：').grid(row=12,column=3)
+			tkinter.Label(root,text='随机种子个：').grid(row=12,column=3)
 			zhongzi_t=tkinter.Text(root,height=1,width=30)
 			zhongzi_t.grid(row=12,column=4)
 			zhongzi_t.insert('0.0',0)
@@ -217,7 +217,7 @@ if __name__ == '__main__':
 			acti_t=tkinter.Text(root,height=1,width=30)
 			acti_t.grid(row=15,column=4)
 			acti_t.insert('0.0',0)
-			tkinter.Label(root,text='事件量:').grid(row=16,column=1)
+			tkinter.Label(root,text='伪随机数:').grid(row=16,column=1)
 			event_t=tkinter.Text(root,height=1,width=30)
 			event_t.insert('0.0',0)
 			event_t.grid(row=16,column=2)
