@@ -5,11 +5,8 @@ import threading
 import tkinter
 from tkinter import *
 from tkinter import messagebox, ttk
-
-from adbcommon.ab_python import starttime_app, adb_monkey, huoqushebeizhuangtai, caijicpu, liulang, getnencun
+from adb.ab_python import starttime_app, adb_monkey, huoqushebeizhuangtai, caijicpu, liulang, getnencun
 from ulit.py_excel import qidongceshi, getcpu
-
-
 def qidongapp():
 	start_tim=[]
 	cishu=[]
@@ -100,7 +97,7 @@ def cpu_app():
 			rescv,send,liulang_sum=liulang(xingneng_bao)
 			cpu_caiji=caijicpu(xingneng_bao)
 			neicun_t['state']= 'normal'
-			pass_list.append(int(nen_cun))
+			pass_list.append(int(nen_cun[:-1]))
 			neicun_t.insert(tkinter.END,('Pass值：%s'%nen_cun))
 			neicun_t.insert(tkinter.END,'\n')
 			neicun_t.see(END)
