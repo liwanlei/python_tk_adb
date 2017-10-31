@@ -15,6 +15,12 @@
 ![Alt text](https://github.com/liwanlei/python_tk_adb/blob/master/img/E.png)
 ![Alt text](https://github.com/liwanlei/python_tk_adb/blob/master/img/5.png)
 
-##  新增加的log日志如图
+##  新增加的log带ui界面日志如图
 
 ![Alt text](https://github.com/liwanlei/python_tk_adb/blob/master/img/log%E6%97%A5%E5%BF%97.png)
+
+## 不带ui界面的log日志展示
+
+![Alt text](https://github.com/liwanlei/python_tk_adb/blob/master/img/%E4%B8%8D%E4%BD%BF%E7%94%A8ui%E7%95%8C%E9%9D%A2%EF%BC%8C%E4%B8%8D%E7%94%A8%E7%BA%BF%E7%A8%8B%E6%B5%8B%E8%AF%95%E6%97%A5%E5%BF%97.png)
+
+
