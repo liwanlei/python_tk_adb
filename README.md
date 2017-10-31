@@ -2,9 +2,9 @@
 # 这是我自己写的一个adb小工具,可以取cpu，内存，流量，测启动时间，monkey测试
 # 
 # 如图展示
-![Alt text](https://github.com/liwanlei/python_tk_adb/blob/master/11.png)
+![Alt text](https://github.com/liwanlei/python_tk_adb/blob/master/img/11.png)
 # 生成的Excel测试报告
-![Alt text](https://github.com/liwanlei/python_tk_adb/blob/master/baogao.png)
-![Alt text](https://github.com/liwanlei/python_tk_adb/blob/master/baogao%20(2).png)
-![Alt text](https://github.com/liwanlei/python_tk_adb/blob/master/E.png)
-![Alt text](https://github.com/liwanlei/python_tk_adb/blob/master/5.png)
+![Alt text](https://github.com/liwanlei/python_tk_adb/blob/master/img/baogao.png)
+![Alt text](https://github.com/liwanlei/python_tk_adb/blob/master/img/baogao%20(2).png)
+![Alt text](https://github.com/liwanlei/python_tk_adb/blob/master/img/E.png)
+![Alt text](https://github.com/liwanlei/python_tk_adb/blob/master/img/5.png)
