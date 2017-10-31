@@ -19,12 +19,15 @@ def qidongapp():
 			acti=activ_t.get('0.0',END)
 			cish=cishu_ac.get()
 		except:
+			LOG.info('获取不到测试数据，请检查！')
 			messagebox.showinfo('提醒', '获取不到测试数据，请检查！')
 		if len(acti)<=1 or len(packname)<=1:
 			messagebox.showinfo('提醒','包命或者包名activity不能为空')
+			LOG.info('包命或者包名activity不能为空')
 		else:
 			if len(cish)<=1:
 				messagebox.showinfo('提醒','次数不能为空')
+				LOG.info('次数不能为空')
 			else:
 				i=0
 				e1['state']= 'normal'
@@ -39,6 +42,7 @@ def qidongapp():
 						messagebox.showwarning('警告','请检查您输入的包或者包的启动activity')
 						break
 					text='第%s次启动时间：%s'%(i+1,start_time[1])
+					LOG.info('第%s次启动时间：%s'%(i+1,start_time[1]))
 					sum+=int(start_time[1])
 					e1['state']= 'normal'
 					e1.insert(tkinter.END,text)
@@ -46,11 +50,14 @@ def qidongapp():
 					e1.see(END)
 					btn_start['state']= 'disabled'
 				e1.insert(tkinter.END,('平均用时:%s'%(sum/int(cish))))
+				LOG.info(('平均用时:%s'%(sum/int(cish))))
 				qidongceshi(cishu=cishu,start=start_tim)
 				messagebox.showinfo('提示','测试报告已经生成，请到当前目录查看')
+				LOG.info('测试报告已经生成，请到当前目录查看')
 				e1['state']= 'disabled'
 				btn_start['state']= 'normal'
 				messagebox.showinfo('通知','测试已经完成')
+				LOG.info('测试已经完成')
 	else:
 		messagebox.showerror('警告','设备连接异常')
 		LOG.info('设备连接异常')
@@ -106,12 +113,14 @@ def cpu_app():
 			neicun_t['state']= 'normal'
 			pass_list.append(int(nen_cun[:-1]))
 			neicun_t.insert(tkinter.END,('Pass值：%s'%nen_cun))
+			LOG.info('第%s次：Pass：%s' % (i, nen_cun))
 			neicun_t.insert(tkinter.END,'\n')
 			neicun_t.see(END)
 			neicun_t['state']= 'disabled'
 			cpu_t['state']= 'normal'
 			cpu_list.append(int(cpu_caiji.split('%')[0]))
 			cpu_t.insert(tkinter.END,('CPU占有率：%s'%cpu_caiji))
+			LOG.info('第%s次：CPU占用率：%s'%(i,cpu_caiji))
 			cpu_t.insert(tkinter.END,'\n')
 			cpu_t.see(END)
 			cpu_t['state']= 'disabled'
@@ -120,6 +129,7 @@ def cpu_app():
 			rescv_list.append(int(rescv))
 			send_list.append(int(send))
 			liulang_t.insert(tkinter.END,('总流量：%sk,上传流量:%sk,下载流量：%sk'%(liulang_sum,rescv,send)))
+			LOG.info('第%s次：总流量：%sk,上传流量:%sk,下载流量：%sk' % (i, liulang_sum,rescv,send))
 			liulang_t.insert(tkinter.END,'\n')
 			liulang_t.see(END)
 			liulang_t['state']= 'disabled'
@@ -133,13 +143,13 @@ def cpu_app():
 	else:
 		LOG.info('测试的设备必须正常连接，请注意')
 		messagebox.showwarning('警告','设备连接异常 请重新连接设备!')
-@logger('用线程来启动测试！采集cpu占用率,上传下载流量，内存')
-def teread():
+@logger('次用线程来启动测试！采集cpu占用率,上传下载流量，内存')
+def teread():#如果不是ui界面，可以不用线程
 	for i in range(1):
 		t=threading.Thread(target=cpu_app,args=())
 		t.start()
 @logger('启动app时间线程测试')
-def teread_start():
+def teread_start():#如果不用ui界面，可以不用线程
 	for i in range(1):
 		t=threading.Thread(target=qidongapp,args=())
 		t.start()
