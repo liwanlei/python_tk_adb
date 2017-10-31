@@ -7,14 +7,19 @@ from tkinter import *
 from tkinter import messagebox, ttk
 from adb.ab_python import starttime_app, adb_monkey, huoqushebeizhuangtai, caijicpu, liulang, getnencun
 from ulit.py_excel import qidongceshi, getcpu
+from ulit.log import LOG,logger
+@logger('启动app时间测试')
 def qidongapp():
 	start_tim=[]
 	cishu=[]
 	status_shebei=huoqushebeizhuangtai()
 	if status_shebei =='device':
-		packname=baoming_t.get('0.0',END)
-		acti=activ_t.get('0.0',END)
-		cish=cishu_ac.get()
+		try:
+			packname=baoming_t.get('0.0',END)
+			acti=activ_t.get('0.0',END)
+			cish=cishu_ac.get()
+		except:
+			messagebox.showinfo('提醒', '获取不到测试数据，请检查！')
 		if len(acti)<=1 or len(packname)<=1:
 			messagebox.showinfo('提醒','包命或者包名activity不能为空')
 		else:
@@ -48,6 +53,8 @@ def qidongapp():
 				messagebox.showinfo('通知','测试已经完成')
 	else:
 		messagebox.showerror('警告','设备连接异常')
+		LOG.info('设备连接异常')
+@logger('monkey测试')
 def monkey_app():
 	status_shebei=huoqushebeizhuangtai()
 	if status_shebei =='device':
@@ -64,25 +71,26 @@ def monkey_app():
 			log=log_t.get('0.0',END).split()[0]
 			danghang=danghang_t.get('0.0',END).split()[0]
 			if len(packname)<=5:
+				LOG.info('请正确填写包名')
 				messagebox.showwarning('提醒','请正确填写包名')
 			if int(touch)+int(huadong)+int(guiji)+int(danghang)+int(xitong)+int(acti) >100:
 				messagebox.showerror('提醒','您输入的所有的事件的比例和不能超过100%')
-
-			# btn_monkey['state']= 'disabled'
+				LOG.info('您输入的所有的事件的比例和不能超过100')
 			adb_monkey(packagename=packname,s_num=zhongzi,throttle=time,pct_touch=touch,pct_motion=huadong,pct_trackball=guiji,pct_nav=danghang,pct_syskeys=xitong,pct_appswitch=acti,num=event,logfilepath=log)
-			#messagebox.showinfo('通知',('测试完毕,日志存放：%s'%log))
-			# btn_monkey['state']= 'normal'
 		except :
 			messagebox.showwarning('警告','必须填写monkey相关数据')
-
+			LOG.info('monkey 测试出错，原因:%s'%Exception)
 	else:
+		LOG.info('设备连接异常 请重新连接设备!')
 		messagebox.showwarning('警告','设备连接异常 请重新连接设备!')
+@logger('cpu占用率,上传下载流量，内存的测试')
 def cpu_app():
 	status_shebei=huoqushebeizhuangtai()
 	if status_shebei =='device':
 		xingneng_bao=xingneng_baoming.get('0.0',END).split()[0]
 		xing=xing_t.get()
 		if len(xingneng_bao)<=5:
+			LOG.info('包名必须真实有效')
 			messagebox.showwarning('警告','请检查您的包名')
 		cishu_list=[]
 		cpu_list=[]
@@ -93,7 +101,6 @@ def cpu_app():
 		i=0
 		for i in range(int(xing)):
 			nen_cun=getnencun(xingneng_bao)
-
 			rescv,send,liulang_sum=liulang(xingneng_bao)
 			cpu_caiji=caijicpu(xingneng_bao)
 			neicun_t['state']= 'normal'
@@ -121,18 +128,23 @@ def cpu_app():
 			cishu_list.append(int(i))
 		getcpu(cishu=cishu_list,start_cpu=cpu_list,recv_list=rescv_list,send_list=send_list,total_list=total_list,Pass_list=pass_list)
 		xingneng_btn['state']= 'normal'
+		LOG.info('测试完成')
 		messagebox.showinfo('提醒','测试完毕，测试报告已经生成！')
 	else:
+		LOG.info('测试的设备必须正常连接，请注意')
 		messagebox.showwarning('警告','设备连接异常 请重新连接设备!')
+@logger('用线程来启动测试！采集cpu占用率,上传下载流量，内存')
 def teread():
 	for i in range(1):
 		t=threading.Thread(target=cpu_app,args=())
 		t.start()
+@logger('启动app时间线程测试')
 def teread_start():
 	for i in range(1):
 		t=threading.Thread(target=qidongapp,args=())
 		t.start()
 if __name__ == '__main__':
+	LOG.info('测试小程序开始启动！测试开启！')
 	try:
 		status_shebei=huoqushebeizhuangtai()
 		if status_shebei =='device':
@@ -229,9 +241,10 @@ if __name__ == '__main__':
 			btn_monkey.grid(row=17,column=3)
 			root.mainloop()
 		else:
+			LOG('设备未连接或者连接异常!目前连接状态:%s'%status_shebei)
 			print(status_shebei)
 			print('设备未连接或者连接异常')
 	except Exception as e:
 		print(e)
-		print('请检查您是否连接设备')
+		LOG.info('测试异常，原因：%s'%e)
 
