@@ -14,19 +14,20 @@ def starttime_app(packagename,packagenameactivicy):#启动耗时
 	return me
 @logger('获取流量')
 def liulang(packagename):
-	cmd='adb shell cat /data/system/packages.list | %s %s'%(find,packagename)
+	cmd='adb shell ps  | %s %s'%(find,packagename)
 	cm=os.popen(cmd).read().split()[1]
-	cmd1='adb shell cat /proc/net/xt_qtaguid/stats | %s %s'%(find,cm)
-	me1_shou=os.popen(cmd1).read().split()[5]#接受
-	me2_shou=os.popen(cmd1).read().split()[7]#上传
-	cmd2='adb shell cat /proc/net/xt_qtaguid/stats | %s %s'%(find,cm)
-	me1_xia=os.popen(cmd1).read().split()[5]#接受
-	me2_xia=os.popen(cmd1).read().split()[7]#上传
-	liulang_sum_1=(int(me1_shou)+int(me2_shou))#过程产生流量计算为执行后的流量-执行前的流量，
-	liulang_sum_xia=(int(me1_xia)+int(me2_xia))
-	liulang_sum=int(liulang_sum_xia)-int(liulang_sum_1)
-	me1=int(me1_xia)-int(me1_shou)
-	me2=int(me2_xia)-int(me2_shou)
+	cmd1="adb shell cat /proc/"+cm+"/net/dev | findstr wlan0"
+	liul = os.popen(cmd1).read().split()
+	me1_shou=liul[1]#接受
+	me2_shou=liul[9]#上传
+	time.sleep(2)
+	cmd2="adb shell cat /proc/"+cm+"/net/dev | findstr wlan0"
+	liul1 = os.popen(cmd2).read().split()
+	me1_xia=liul1[1]#接受
+	me2_xia=liul1[9]#上传
+	me1=int(int(me1_xia)-int(me1_shou))/1024
+	me2=int(int(me2_xia)-int(me2_shou))/1024
+	liulang_sum=me1+me2
 	return me1 ,me2,liulang_sum
 @logger('获取cpu信息')
 def caijicpu(packagename):#这里采集的cpu时候可以是执行操作采集 就是-n  -d  刷新间隔
@@ -36,7 +37,7 @@ def caijicpu(packagename):#这里采集的cpu时候可以是执行操作采集 �
 @logger('获取内存')
 def getnencun(packagename):#Total 的实际使用过物理内存
 	cpu = 'adb shell top -n 1| %s %s' % (find, packagename)
-	re_cpu=os.popen(cpu).read().split()[6]
+	re_cpu=int(os.popen(cpu).read().split()[8][:-1])/1024
 	return re_cpu
 @logger('执行monkey测试')
 def adb_monkey(packagename,s_num,throttle,pct_touch,pct_motion,pct_trackball,pct_nav,pct_syskeys,pct_appswitch,num,logfilepath):
