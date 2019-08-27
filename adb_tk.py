@@ -111,23 +111,23 @@ def cpu_app():
 			rescv,send,liulang_sum=liulang(xingneng_bao)
 			cpu_caiji=caijicpu(xingneng_bao)
 			neicun_t['state']= 'normal'
-			pass_list.append(int(nen_cun[:-1]))
+			pass_list.append((nen_cun))
 			neicun_t.insert(tkinter.END,('Pass值：%s'%nen_cun))
 			LOG.info('第%s次：Pass：%s' % (i, nen_cun))
 			neicun_t.insert(tkinter.END,'\n')
 			neicun_t.see(END)
 			neicun_t['state']= 'disabled'
 			cpu_t['state']= 'normal'
-			cpu_list.append(int(cpu_caiji.split('%')[0]))
+			cpu_list.append((cpu_caiji.split('%')[0]))
 			cpu_t.insert(tkinter.END,('CPU占有率：%s'%cpu_caiji))
 			LOG.info('第%s次：CPU占用率：%s'%(i,cpu_caiji))
 			cpu_t.insert(tkinter.END,'\n')
 			cpu_t.see(END)
 			cpu_t['state']= 'disabled'
 			liulang_t['state']= 'normal'
-			total_list.append(int(liulang_sum))
-			rescv_list.append(int(rescv))
-			send_list.append(int(send))
+			total_list.append((liulang_sum))
+			rescv_list.append((rescv))
+			send_list.append((send))
 			liulang_t.insert(tkinter.END,('总流量：%sk,上传流量:%sk,下载流量：%sk'%(liulang_sum,rescv,send)))
 			LOG.info('第%s次：总流量：%sk,上传流量:%sk,下载流量：%sk' % (i, liulang_sum,rescv,send))
 			liulang_t.insert(tkinter.END,'\n')
@@ -171,7 +171,7 @@ if __name__ == '__main__':
 			neicun_t=tkinter.Text(root,height=5,width=30)
 			neicun_t.grid(row=3,column=2)
 			neicun_t.see(END)
-			suji_ev=[50,100,150,200,300]#这里还原可以增加可以选择的次数
+			suji_ev=[60,300,600]#这里还原可以增加可以选择的次数
 			xing_t=ttk.Combobox(root,values=suji_ev,width=5)
 			xing_t.current(0)
 			xing_t.grid(row=1,column=6)
@@ -204,7 +204,7 @@ if __name__ == '__main__':
 			tkinter.Label(root,text='Monkey 测试',fg='red',font=("黑体", 15, "bold")).grid(row=11,column=3)
 			tkinter.Label(root,text='测试包名：').grid(row=12,column=1)
 			baoming_t1=tkinter.Text(root,height=1,width=30)
-			baoming_t1.insert('0.0',0)
+			baoming_t1.insert('0.0',liulang)
 			baoming_t1.grid(row=12,column=2)
 			tkinter.Label(root,text='随机种子个：').grid(row=12,column=3)
 			zhongzi_t=tkinter.Text(root,height=1,width=30)
